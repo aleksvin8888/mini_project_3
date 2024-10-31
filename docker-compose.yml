@@ -1,0 +1,30 @@
+
+services:
+  backend_rds:
+    build:
+      context: ./backend_rds
+    ports:
+      - "8001:8001"
+    environment:
+      - DATABASE_URL=postgres://postgres:password@db:5432/mydatabase
+    depends_on:
+      - db
+
+  backend_redis:
+    build:
+      context: ./backend_redis
+    ports:
+      - "8002:8002"
+    environment:
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend_rds
+      - backend_redis
