@@ -6,9 +6,11 @@ services:
     ports:
       - "8001:8001"
     environment:
-      - DATABASE_URL=postgres://postgres:password@db:5432/mydatabase
-    depends_on:
-      - db
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
 
   backend_redis:
     build:
@@ -16,15 +18,21 @@ services:
     ports:
       - "8002:8002"
     environment:
-      - REDIS_URL=redis://redis:6379
-    depends_on:
-      - redis
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=${DEBUG}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_DB=${REDIS_DB}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
 
   frontend:
     build:
       context: ./frontend
     ports:
       - "3000:3000"
+    environment:
+      - BACKEND_RDS_URL=${BACKEND_RDS_URL}
+      - BACKEND_REDIS_URL=${BACKEND_REDIS_URL}
     depends_on:
       - backend_rds
       - backend_redis
