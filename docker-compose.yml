@@ -22,8 +22,7 @@ services:
       - DEBUG=${DEBUG}
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PORT=${REDIS_PORT}
-      - REDIS_DB=${REDIS_DB}
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_DB=0
 
   frontend:
     build:
